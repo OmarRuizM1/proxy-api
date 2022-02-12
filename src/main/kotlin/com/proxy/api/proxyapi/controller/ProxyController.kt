@@ -33,11 +33,16 @@ class ProxyController(private val proxyService: ProxyService, private val proxyM
     @GetMapping("/findAllNotUsedWithPort8080")
     fun findAllNotUsedWithPort8080(): List<Proxy?>? = proxyService.findAllNotUsedWithPort8080()
 
+    @GetMapping("/findAllNotUsedWithProtocolHTTP")
+    fun findAllNotUsedWithProtocolHTTP(): List<Proxy?>? = proxyService.findAllNotUsedWithPortHTTP()
+
+    @GetMapping("/findFirstNotUsedWithPortHTTP")
+    fun findFirstNotUsedWithPortHTTP(): Proxy? = proxyService.findFirstNotUsedWithPortHTTP()
+
     @PostMapping("/updateUsedProxy")
     fun updateUsedProxy(@RequestBody urlDto: URLDto) = proxyService.updateUsedProxy(urlDto.url)
 
     @GetMapping("/bulkUpdateUsedFalse")
     fun bulkUpdateUsedFalse() = proxyService.bulkUpdateUsedFalse()
-
 
 }

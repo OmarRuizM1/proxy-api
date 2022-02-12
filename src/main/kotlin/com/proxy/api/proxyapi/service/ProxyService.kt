@@ -33,11 +33,19 @@ class ProxyService(private val proxyRepository: ProxyRepository, private val pro
         return proxyRepository.findAllByUsedIsFalse()?.filter { it?.port == 8080 }
     }
 
+    fun findAllNotUsedWithPortHTTP(): List<Proxy?>? {
+        return proxyRepository.findAllByUsedIsFalse()?.filter { it?.protocol == "HTTP" || it?.protocol == "http" }
+    }
+
+    fun findFirstNotUsedWithPortHTTP(): Proxy? {
+        return proxyRepository.findFirstByUsedAndProtocol(false, "HTTP")
+    }
+
     fun saveByUrl(url: String) {
         proxyRepository.save(proxyParser.fromURLToProxyEntity(url))
     }
 
-    fun bulkUpdateUsedFalse(){
+    fun bulkUpdateUsedFalse() {
         proxyRepository.findAllByUsedIsTrue()?.forEach {
             if (it != null) {
                 it.used = false
